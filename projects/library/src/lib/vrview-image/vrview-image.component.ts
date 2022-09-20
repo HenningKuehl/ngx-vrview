@@ -1,15 +1,9 @@
 import {
-  AfterViewInit,
   Component,
-  ElementRef,
-  EventEmitter,
-  Input, OnChanges, OnDestroy,
-  OnInit,
-  Output, SimpleChanges,
-  ViewChild,
+  Input,
 } from '@angular/core';
+import {_VRViewBase, Player} from "../vrview-base";
 
-let id = 0;
 declare let VRView: any;
 
 @Component({
@@ -17,82 +11,26 @@ declare let VRView: any;
   templateUrl: './vrview-image.component.html',
   styleUrls: ['./vrview-image.component.css']
 })
-export class VRViewImageComponent implements OnChanges, OnInit, AfterViewInit, OnDestroy {
-  @Input() src!: string;
+export class VRViewImageComponent extends _VRViewBase {
 
-  @Input() id = `vrview-${id++}`;
-  @Input() height = 400;
-  @Input() width = 400;
-
-  @Input() stereo?: boolean;
-  @Input() debug?: boolean;
-  @Input() vrOff?: boolean;
-  @Input() autoPanOff?: boolean;
-  @Input() defaultYaw?: number;
-  @Input() yawOnly?: boolean;
-
-  @Output() load = new EventEmitter<Event>();
-  @Output() ready = new EventEmitter();
-  @Output() error = new EventEmitter<any>();
-  @Output() click = new EventEmitter<{id?: number}>();
-  @Output() modeChange = new EventEmitter<any>();
-
-  @ViewChild('viewer') viewerElement!: ElementRef<HTMLElement>;
-
-  scriptLoaded = false;
-  viewInitialized = false;
-  playerInitialized = false;
-
-  vrView: any | null = null;
+  /**
+   * URL to a preview image for a 360° image file.
+   */
+  @Input() previewSrc?: string;
 
   constructor() {
-    this.addVRViewScript();
+    super();
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-  }
+  protected initPlayer(): Player {
+    const config = this.configBase;
+    config.image = this.src;
 
-  ngOnInit(): void {
-  }
-
-  ngAfterViewInit() {
-    this.viewInitialized = true;
-    this.initPlayer();
-  }
-
-  ngOnDestroy() {
-    if (this.vrView) {
-      this.vrView.removeAllListeners();
-    }
-  }
-
-  private addVRViewScript() {
-    const vrViewScript = document.createElement('script');
-    vrViewScript.setAttribute('src', 'https://storage.googleapis.com/vrview/2.0/build/vrview.min.js')
-    vrViewScript.addEventListener('load', (event) => {
-      this.scriptLoaded = true;
-      this.load.emit(event);
-      this.initPlayer();
-    });
-    document.body.appendChild(vrViewScript);
-  }
-
-  private initPlayer() {
-    if (!this.scriptLoaded || !this.viewInitialized || this.playerInitialized) {
-      return;
+    if (this.previewSrc) {
+      config.preview = this.previewSrc;
     }
 
-    this.vrView = new VRView.Player(`#${this.viewerElement.nativeElement.id}`, {
-      image: this.src,
-      width: this.width,
-      height: this.height,
-      is_debug: this.debug,
-    });
-
-    this.vrView.on('ready', () => this.ready.emit());
-    this.vrView.on('error', (event: any) => this.error.emit(event));
-    this.vrView.on('click', (event: { id?: number }) => this.click.emit(event));
-    this.vrView.on('modechange', (event: any) => this.modeChange.emit(event));
+    return new VRView.Player(`#${this.viewerElement.nativeElement.id}`, config);
   }
 
 }
