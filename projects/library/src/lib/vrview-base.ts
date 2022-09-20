@@ -1,10 +1,11 @@
-import {AfterViewInit, ElementRef, EventEmitter, Input, OnDestroy, Output, ViewChild} from "@angular/core";
+import {AfterViewInit, Directive, ElementRef, EventEmitter, Input, OnDestroy, Output, ViewChild} from "@angular/core";
 import {BooleanInput, coerceBooleanProperty, coerceNumberProperty, NumberInput} from "@angular/cdk/coercion";
 
 let id = 0;
 
 export type Player = any;
 
+@Directive()
 export abstract class _VRViewBase implements AfterViewInit, OnDestroy {
 
   /**
