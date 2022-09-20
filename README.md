@@ -1,27 +1,66 @@
-# NgxVrView
+# ngx VR View
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.1.0.
+This library helps to implement Googles VR View library in Angular.
 
-## Development server
+[//]: # ([![Version]&#40;https://img.shields.io/npm/v/v-network-graph.svg&#41;]&#40;https://www.npmjs.com/package/ngx-vrview&#41;)
+[//]: # (![GitHub package.json dependency version]&#40;https://img.shields.io/github/package-json/dependency-version/HenningKuehl/ngx-vrview/dep/@vue/compiler-sfc?label=Vue&#41;)
+[![GitHub license](https://img.shields.io/github/license/HenningKuehl/ngx-vrview)](https://github.com/HenningKuehl/ngx-vrview)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Installation
 
-## Code scaffolding
+Install with npm
+```sh
+npm install ngx-vrview
+```
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Install with yarn
+```sh
+yarn add ngx-vrview
+```
 
-## Build
+Add module
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+```ts
+import { VRViewModule } from "ngx-vrview";
 
-## Running unit tests
+...
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+@NgModule({
+  declarations: [AppComponent],
+  imports: [
+    ...
+    VRViewModule,
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+```
 
-## Running end-to-end tests
+Use image component
+```html
+<vrview-image [src]="https://url-to-image.com" width="100%" height="400px"></vrview-image>
+```
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+Use video component
+```html
+<vrview-video [src]="https://url-to-video.com" width="100%" height="400px"></vrview-video>
+```
 
-## Further help
+## Contributing
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+If you find any bugs and/or want to contribute, feel free to submit issues or pull requests.
+
+## License
+
+Under the MIT license.  
+See [LICENSE](https://github.com/HenningKuehl/ngx-vrview/blob/main/LICENSE) file for more details.
+
+## Support me 🌟
+  
+If you find this library helpful, please consider giving it a star ⭐ on GitHub!
+
+You may [buy me a coffee](https://www.buymeacoffee.com/hnnngkhl) if you would
+like to show some support for this open-source project.
+It will be greatly appreciated!  
+[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/yellow_img.png)](https://www.buymeacoffee.com/hnnngkhl)
