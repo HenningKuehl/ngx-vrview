@@ -1,0 +1,14 @@
+<h1>Ngx VR View Demo</h1>
+<div>
+  <label for="debug-toggle">Debug</label>
+  <input type="checkbox" id="debug-toggle" [(ngModel)]="debug">
+</div>
+<vrview-image
+  src="https://storage.googleapis.com/vrview/examples/coral.jpg"
+  [debug]="debug"
+  (load)="logEvent('load', $event)"
+  (ready)="logEvent('ready', $event)"
+  (error)="logEvent('error', $event)"
+  (click)="logEvent('click', $event)"
+  (modeChange)="logEvent('modeChange', $event)"
+></vrview-image>
